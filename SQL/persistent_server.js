@@ -1,10 +1,4 @@
 var mysql = require('mysql');
-/* If the node mysql module is not found on your system, you may
- * need to do an "sudo npm install -g mysql". */
-
-/* You'll need to fill the following out with your mysql username and password.
- * database: "chat" specifies that we're using the database called
- * "chat", which we created by running schema.sql.*/
 var dbConnection = mysql.createConnection({
   user: "root",
   password: "",
@@ -13,6 +7,21 @@ var dbConnection = mysql.createConnection({
 
 dbConnection.connect();
 
+//get request
+
+
+
+
+
+
+
+
+
+
+
+
+
+//post request
 var submitMessage = exports.submitMessage = function(message, username, roomname){
   var date = new Date();
   checkUsernameAndRoomname(username, roomname, function(userID, roomID){
@@ -60,11 +69,6 @@ var getRoomname = function(userID, roomname, cb){
       setRoomname(userID, roomname, function(userID, roomID) {cb(userID, roomID);});
     }
   });
-
-  //get the roomnameID from the server
-    //if there is a roomnameID, pass it into the final callback of submit message
-    //else
-    //call into another function that will set room
 };
 
 var setRoomname = function(userID, roomname, cb){
@@ -82,25 +86,3 @@ var setUsername = function(username, roomname, cb){
       cb(result.insertId, roomname);
   });
 };
-
-submitMessage("we are really the kings", "felix", "hackreaktor");
-  //check if input username has an ID
-    //if has an ID, return ID to submit message
-    //else
-      //create a new row in userID table, and return new ID
-//roomname helper
-  //check if input roomname has an ID
-    //if has an ID, return ID to submit message
-    //else
-      //create a new row in roomname table, and return new ID
-
-
-
-
-/* Now you can make queries to the Mysql database using the
- * dbConnection.query() method.
- * See https://github.com/felixge/node-mysql for more details about
- * using this module.*/
-
-/* You already know how to create an http server from the previous
- * assignment; you can re-use most of that code here. */
