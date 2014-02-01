@@ -9,25 +9,23 @@ dbConnection.connect();
 
 //get request
 
+var select = "SELECT messages.text, usernames.username, roomnames.roomname FROM `messages` LEFT JOIN `usernames` on messages.userID = usernames.id LEFT JOIN `roomnames` on messages.roomnameID = roomnames.id";
 
-
-
-
-
-
-
-
-
-
+var joinFunction = exports.joinFunction = function(cb){
+  dbConnection.query(select, function(error, result){
+    if (error) console.log(error);
+    cb(result.reverse());
+  });
+};
 
 
 //post request
-var submitMessage = exports.submitMessage = function(message, username, roomname){
+var submitMessage = exports.submitMessage = function(text, username, roomname){
   var date = new Date();
   checkUsernameAndRoomname(username, roomname, function(userID, roomID){
-    dbConnection.query("insert into messages (message, userID, roomnameID) values (\'" + message + "\', \'" + userID + "\', \'" +roomID + "\')", function(error, result){
+    dbConnection.query("insert into messages (text, userID, roomnameID) values (\'" + text + "\', \'" + userID + "\', \'" +roomID + "\')", function(error, result){
       if (error) console.log(error);
-      console.log('this message has been sent:', message);
+      console.log('this text has been sent:', text);
     });
   });
 };
